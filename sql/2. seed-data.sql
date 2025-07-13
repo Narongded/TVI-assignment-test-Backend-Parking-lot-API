@@ -1,0 +1,1 @@
+INSERT INTO `admin_user` VALUES (1,'narongded','pinprechachai','test@email.com','$2a$12$r6rzLCTaVJoNjfyqueKJy.Fr.KdtKw5H7FUiH8VIXbR0nvcdFO3Vu','2025-07-11 17:33:22','2025-07-11 17:33:22',NULL);
