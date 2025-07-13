@@ -24,10 +24,12 @@ describe('ParkingSlotService', () => {
     mockParkingSlotRepository = {
       findOneByWhere: jest.fn(),
       createEntity: jest.fn(),
+      findByWhere: jest.fn(),
     };
 
     mockParkingLotRepository = {
       findOneByWhere: jest.fn(),
+      updateEntity: jest.fn(),
     };
 
     mockActivityLogService = {
@@ -110,6 +112,36 @@ describe('ParkingSlotService', () => {
       tickets: [],
       adminUser: null,
     };
+    const mockParkingSlotList = [
+      {
+        id: 3,
+        slotNumber: 'A01',
+        distanceFromEntry: 10,
+        parkingLotId: 1,
+        isParking: false,
+        createdBy: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null,
+        parkingLot: null,
+        tickets: [],
+        adminUser: null,
+      },
+      {
+        id: 4,
+        slotNumber: 'A01',
+        distanceFromEntry: 10,
+        parkingLotId: 1,
+        isParking: false,
+        createdBy: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null,
+        parkingLot: null,
+        tickets: [],
+        adminUser: null,
+      },
+    ];
 
     beforeEach(() => {
       mockClsService.get.mockReturnValue({ user: mockUser });
@@ -117,7 +149,15 @@ describe('ParkingSlotService', () => {
 
     it('should create a parking slot successfully', async () => {
       mockParkingLotRepository.findOneByWhere.mockResolvedValue(mockParkingLot);
+      mockParkingSlotRepository.findByWhere.mockResolvedValue(
+        mockParkingSlotList,
+      );
       mockParkingSlotRepository.findOneByWhere.mockResolvedValue(null);
+      mockParkingLotRepository.updateEntity.mockResolvedValue({
+        affected: 1,
+        generatedMaps: [],
+        raw: [],
+      });
       mockParkingSlotRepository.createEntity.mockResolvedValue(mockCreatedSlot);
       mockActivityLogService.createActivityLog.mockResolvedValue(undefined);
 
@@ -126,10 +166,19 @@ describe('ParkingSlotService', () => {
       expect(mockParkingLotRepository.findOneByWhere).toHaveBeenCalledWith({
         id: mockCreateParkingSlotDto.parkingLotId,
       });
+      expect(mockParkingSlotRepository.findByWhere).toHaveBeenCalledWith({
+        parkingLotId: mockCreateParkingSlotDto.parkingLotId,
+      });
       expect(mockParkingSlotRepository.findOneByWhere).toHaveBeenCalledWith({
         slotNumber: mockCreateParkingSlotDto.slotNumber,
         parkingLotId: mockCreateParkingSlotDto.parkingLotId,
       });
+      expect(mockParkingLotRepository.updateEntity).toHaveBeenCalledWith(
+        { id: mockParkingLot.id },
+        {
+          availableSlot: mockParkingLot.availableSlot + 1,
+        },
+      );
       expect(mockParkingSlotRepository.createEntity).toHaveBeenCalledWith({
         ...mockCreateParkingSlotDto,
         isParking: false,
@@ -140,6 +189,27 @@ describe('ParkingSlotService', () => {
         adminUserId: mockUser.sub,
       });
       expect(result).toEqual(mockCreatedSlot);
+    });
+
+    it('should throw BadRequestException when parking lot is full', async () => {
+      mockParkingLotRepository.findOneByWhere.mockResolvedValue({
+        ...mockParkingLot,
+        totalSlot: mockParkingSlotList.length,
+      });
+      mockParkingSlotRepository.findByWhere.mockResolvedValue(
+        mockParkingSlotList,
+      );
+
+      await expect(
+        service.createParkingSlot(mockCreateParkingSlotDto),
+      ).rejects.toThrow(new BadRequestException('Parking lot is full'));
+
+      expect(mockParkingLotRepository.findOneByWhere).toHaveBeenCalledWith({
+        id: mockCreateParkingSlotDto.parkingLotId,
+      });
+      expect(mockParkingSlotRepository.findByWhere).toHaveBeenCalledWith({
+        parkingLotId: mockCreateParkingSlotDto.parkingLotId,
+      });
     });
 
     it('should throw NotFoundException when parking lot is not found', async () => {
@@ -193,6 +263,9 @@ describe('ParkingSlotService', () => {
     it('should throw InternalServerErrorException when repository createEntity fails', async () => {
       mockParkingLotRepository.findOneByWhere.mockResolvedValue(mockParkingLot);
       mockParkingSlotRepository.findOneByWhere.mockResolvedValue(null);
+      mockParkingSlotRepository.findByWhere.mockResolvedValue(
+        mockParkingSlotList,
+      );
       mockParkingSlotRepository.createEntity.mockRejectedValue(
         new Error('Database error'),
       );
@@ -212,6 +285,9 @@ describe('ParkingSlotService', () => {
       mockParkingLotRepository.findOneByWhere.mockResolvedValue(mockParkingLot);
       mockParkingSlotRepository.findOneByWhere.mockResolvedValue(null);
       mockParkingSlotRepository.createEntity.mockResolvedValue(mockCreatedSlot);
+      mockParkingSlotRepository.findByWhere.mockResolvedValue(
+        mockParkingSlotList,
+      );
       mockActivityLogService.createActivityLog.mockRejectedValue(
         new Error('Activity log error'),
       );

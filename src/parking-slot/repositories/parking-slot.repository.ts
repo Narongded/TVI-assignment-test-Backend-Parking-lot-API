@@ -73,6 +73,24 @@ export class ParkingSlotRepository {
     }
   }
 
+  async findByWhere(
+    where: FindOptionsWhere<ParkingSlotEntity>,
+  ): Promise<ParkingSlotEntity[]> {
+    try {
+      const result = await this.repository.find({ where });
+      return result;
+    } catch (error) {
+      this.logger.error(
+        {
+          method: 'findByWhere',
+          message: error.message,
+        },
+        error.stack,
+      );
+      throw error;
+    }
+  }
+
   async findOneByWhereAndOrder(
     where: FindOptionsWhere<ParkingSlotEntity>,
     order: FindOptionsOrder<ParkingSlotEntity>,

@@ -42,6 +42,19 @@ export class ParkingSlotService {
       if (existingSlot) {
         throw new BadRequestException('Parking slot number already exists');
       }
+      const parkingSlotList = await this.parkingSlotRepository.findByWhere({
+        parkingLotId: createParkingLotDto.parkingLotId,
+      });
+
+      if (parkingSlotList.length >= parkingLot.totalSlot) {
+        throw new BadRequestException('Parking lot is full');
+      }
+      await this.parkingLotRepository.updateEntity(
+        { id: parkingLot.id },
+        {
+          availableSlot: parkingLot.availableSlot + 1,
+        },
+      );
       const result = await this.parkingSlotRepository.createEntity({
         ...createParkingLotDto,
         isParking: false,

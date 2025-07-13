@@ -132,6 +132,44 @@ describe('ParkingSlotRepository', () => {
     });
   });
 
+  describe('findByWhere', () => {
+    it('should find parking slot entities by where condition', async () => {
+      const mockWhere: FindOptionsWhere<ParkingSlotEntity> = {
+        parkingLotId: 1,
+      };
+      const mockFindResult = [
+        {
+          id: 1,
+          slotNumber: 'A01',
+          isParking: false,
+          parkingLotId: 1,
+        },
+        {
+          id: 2,
+          slotNumber: 'A02',
+          isParking: true,
+          parkingLotId: 1,
+        },
+      ];
+
+      mockRepository.find.mockResolvedValue(mockFindResult);
+
+      const result = await service.findByWhere(mockWhere);
+      expect(mockRepository.find).toHaveBeenCalledWith({ where: mockWhere });
+      expect(result).toEqual(mockFindResult);
+    });
+
+    it('should throw an error if find fails', async () => {
+      const mockWhere: FindOptionsWhere<ParkingSlotEntity> = {
+        parkingLotId: 1,
+      };
+      const throwError = new Error('find failed');
+      mockRepository.find.mockRejectedValue(throwError);
+
+      await expect(service.findByWhere(mockWhere)).rejects.toThrow(throwError);
+    });
+  });
+
   describe('findOneByWhereAndOrder', () => {
     it('should find a parking slot entity by where condition with order', async () => {
       const mockWhere: FindOptionsWhere<ParkingSlotEntity> = {

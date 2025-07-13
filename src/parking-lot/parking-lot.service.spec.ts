@@ -62,7 +62,7 @@ describe('ParkingLotService', () => {
       const mockCreateData = {
         ...createBody,
         createdBy: mockClsUser.sub,
-        availableSlot: createBody.totalSlot,
+        availableSlot: 0,
       };
       const mockSaveData: ParkingLotEntity = {
         id: 1,

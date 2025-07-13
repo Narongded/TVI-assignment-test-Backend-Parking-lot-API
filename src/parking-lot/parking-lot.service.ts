@@ -29,7 +29,7 @@ export class ParkingLotService {
       const user = clsData.user;
       const result = await this.parkingLotRepository.createEntity({
         ...createParkingLotDto,
-        availableSlot: createParkingLotDto.totalSlot,
+        availableSlot: 0,
         createdBy: user.sub,
       });
       await this.activityLogService.createActivityLog({
