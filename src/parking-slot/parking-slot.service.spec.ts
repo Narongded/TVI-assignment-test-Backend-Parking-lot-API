@@ -10,7 +10,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { CreateParkingSlotDto } from './dto/parking-slot.dto';
-import { EActivityLogAction } from '../common/enum/common.enum';
+import { EActivityLogAction } from '../common/enum/activity-log.enum';
 import { ParkingLotEntity } from '../parking-lot/entities/parking-lot.entity';
 
 describe('ParkingSlotService', () => {

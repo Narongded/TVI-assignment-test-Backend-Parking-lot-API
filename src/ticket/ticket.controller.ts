@@ -14,7 +14,7 @@ import {
   LeaveParkingDTO,
 } from './dto/ticket.dto';
 import { TicketJwtAuthGuard } from '../common/guard/ticket-jwt.guard';
-import { Public } from '../common/decorator/common.decorator';
+import { Public } from '../common/decorator/public.decorator';
 
 @Controller('ticket')
 export class TicketController {

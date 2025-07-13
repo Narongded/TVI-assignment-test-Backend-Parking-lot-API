@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { AdminUserEntity } from '../admin-user/entities/admin-user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { ActivityLogService } from '../activity-log/activity-log.service';
-import { EActivityLogAction } from '../common/enum/common.enum';
+import { EActivityLogAction } from '../common/enum/activity-log.enum';
 import { IResponseLogin } from './interface/auth.interface';
 @Injectable()
 export class AuthService {

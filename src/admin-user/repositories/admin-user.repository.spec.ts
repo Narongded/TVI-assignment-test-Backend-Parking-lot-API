@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AdminUserRepository } from './admin-user.repository';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { mockRepository } from '../../common/unit-test/common.interface';
+import { mockRepository } from '../../common/constants/test.constants';
 import { FindOptionsWhere } from 'typeorm';
 import { AdminUserEntity } from '../entities/admin-user.entity';
 

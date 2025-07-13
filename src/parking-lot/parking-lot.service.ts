@@ -9,7 +9,7 @@ import { ParkingLotRepository } from './repositories/parking-lot.repository';
 import { ClsService } from 'nestjs-cls';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { ParkingLotEntity } from './entities/parking-lot.entity';
-import { EActivityLogAction } from '../common/enum/common.enum';
+import { EActivityLogAction } from '../common/enum/activity-log.enum';
 import { IAppCls } from '../common/interface/common.interface';
 
 @Injectable()

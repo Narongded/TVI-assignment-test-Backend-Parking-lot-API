@@ -20,7 +20,7 @@ import { ParkingLotEntity } from '../parking-lot/entities/parking-lot.entity';
 import { ParkingSlotEntity } from '../parking-slot/entities/parking-slot.entity';
 import { CarEntity } from '../car/entities/car.entity';
 import { ActivityLogService } from '../activity-log/activity-log.service';
-import { EActivityLogAction } from '../common/enum/common.enum';
+import { EActivityLogAction } from '../common/enum/activity-log.enum';
 import * as jwt from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
 import { TicketEntity } from './entities/ticket.entity';

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { mockRepository } from '../../common/unit-test/common.interface';
+import { mockRepository } from '../../common/constants/test.constants';
 import { ParkingSlotRepository } from './parking-slot.repository';
 import { ParkingSlotEntity } from '../entities/parking-slot.entity';
 import {

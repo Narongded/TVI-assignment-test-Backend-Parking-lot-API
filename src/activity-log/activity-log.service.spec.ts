@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ActivityLogService } from './activity-log.service';
 import { ActivityLogRepository } from './repositories/activity-log.repository';
 import { ClsService } from 'nestjs-cls';
-import { EActivityLogAction } from '../common/enum/common.enum';
+import { EActivityLogAction } from '../common/enum/activity-log.enum';
 
 describe('ActivityLogService', () => {
   let service: ActivityLogService;

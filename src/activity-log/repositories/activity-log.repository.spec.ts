@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ActivityLogRepository } from './activity-log.repository';
-import { mockRepository } from '../../common/unit-test/common.interface';
+import { mockRepository } from '../../common/constants/test.constants';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ActivityLogEntity } from '../entities/activity-log.entity';
-import { EActivityLogAction } from '../../common/enum/common.enum';
+import { EActivityLogAction } from '../../common/enum/activity-log.enum';
 
 describe('ActivityLogRepository', () => {
   let service: ActivityLogRepository;

@@ -10,7 +10,7 @@ import { ConfigService } from '@nestjs/config';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { CreateTicketDto, LeaveParkingDTO } from './dto/ticket.dto';
 import { ECarSize } from '../car/enums/car.enum';
-import { EActivityLogAction } from '../common/enum/common.enum';
+import { EActivityLogAction } from '../common/enum/activity-log.enum';
 import { IsNull } from 'typeorm';
 
 describe('TicketService', () => {

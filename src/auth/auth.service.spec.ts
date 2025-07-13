@@ -5,7 +5,7 @@ import { ActivityLogService } from '../activity-log/activity-log.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { AdminUserEntity } from '../admin-user/entities/admin-user.entity';
-import { EActivityLogAction } from '../common/enum/common.enum';
+import { EActivityLogAction } from '../common/enum/activity-log.enum';
 import { InternalServerErrorException } from '@nestjs/common';
 
 jest.mock('bcrypt');

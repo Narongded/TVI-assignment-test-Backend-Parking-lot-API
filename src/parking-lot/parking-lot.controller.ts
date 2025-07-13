@@ -11,7 +11,7 @@ import {
 import { ParkingLotService } from './parking-lot.service';
 import { CreateParkingLotDto } from './dto/parking-lot.dto';
 import { JwtAuthGuard } from '../common/guard/jwt.guard';
-import { Public } from '../common/decorator/common.decorator';
+import { Public } from '../common/decorator/public.decorator';
 
 @UseGuards(JwtAuthGuard)
 @Controller('parking-lot')

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ParkingLotService } from './parking-lot.service';
-import { EActivityLogAction } from '../common/enum/common.enum';
+import { EActivityLogAction } from '../common/enum/activity-log.enum';
 import { InternalServerErrorException } from '@nestjs/common';
 import { ClsService } from 'nestjs-cls';
 import { ActivityLogService } from '../activity-log/activity-log.service';

@@ -1,0 +1,866 @@
+{
+	"info": {
+		"_postman_id": "7b74691c-9780-4a3a-8a23-e53af5b64894",
+		"name": "Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16629635",
+		"_collection_link": "https://galactic-resonance-75704.postman.co/workspace/Team-Workspace~d1a59921-ac3e-4b8e-81b8-6db85c0251e1/collection/16629635-7b74691c-9780-4a3a-8a23-e53af5b64894?action=share&source=collection_link&creator=16629635"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"    try {",
+									"        // Parse response JSON",
+									"        const responseJson = pm.response.json();",
+									"        ",
+									"        // ดึง accessToken จาก response",
+									"        if (responseJson.accessToken) {",
+									"            // Set accessToken เป็น environment variable",
+									"            pm.environment.set(\"accessToken\", responseJson.accessToken);",
+									"            ",
+									"            // Log ข้อความสำเร็จ",
+									"            console.log(\"✅ Login successful!\");",
+									"            console.log(\"🔑 Access Token saved to environment variable\");",
+									"            console.log(\"Token:\", responseJson.accessToken.substring(0, 20) + \"...\");",
+									"            ",
+									"            // Optional: Set user information ถ้ามี",
+									"            if (responseJson.user) {",
+									"                pm.environment.set(\"userId\", responseJson.user.id);",
+									"                pm.environment.set(\"userEmail\", responseJson.user.email);",
+									"                ",
+									"                console.log(\"👤 User info saved:\");",
+									"                console.log(\"User ID:\", responseJson.user.id);",
+									"                console.log(\"Email:\", responseJson.user.email);",
+									"            }",
+									"            ",
+									"            // Optional: Set token expiry time ถ้ามี",
+									"            if (responseJson.expiresIn) {",
+									"                const expiryTime = new Date();",
+									"                expiryTime.setSeconds(expiryTime.getSeconds() + responseJson.expiresIn);",
+									"                pm.environment.set(\"tokenExpiry\", expiryTime.toISOString());",
+									"                ",
+									"                console.log(\"⏰ Token expires at:\", expiryTime.toISOString());",
+									"            }",
+									"            ",
+									"        } else {",
+									"            console.log(\"❌ No accessToken found in response\");",
+									"            console.log(\"Response structure:\", JSON.stringify(responseJson, null, 2));",
+									"        }",
+									"        ",
+									"    } catch (error) {",
+									"        console.log(\"❌ Error parsing response JSON:\", error.message);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"    }",
+									"    ",
+									"} else {",
+									"    // Login failed",
+									"    console.log(\"❌ Login failed with status:\", pm.response.code);",
+									"    console.log(\"Response:\", pm.response.text());",
+									"    ",
+									"    // Clear existing token if login fails",
+									"    pm.environment.unset(\"accessToken\");",
+									"    pm.environment.unset(\"userId\");",
+									"    pm.environment.unset(\"userEmail\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@email.com\",\n    \"password\":\"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/login",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "login-2025-07-13",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test@email.com\",\n    \"password\":\"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/auth/login",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "282"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11a-q66wnulM9pwMG3ewYnsaU7vERoA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 13 Jul 2025 15:57:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZW1haWwuY29tIiwic3ViIjoxLCJpYXQiOjE3NTI0MjIyMzMsImV4cCI6MTc1MjQzNjYzM30.L-X7S8RVygIjOlA1vf208n3foMwm__Yvn3bXRJIgUTk\",\n    \"user\": {\n        \"id\": 1,\n        \"firstName\": \"narongded\",\n        \"lastName\": \"pinprechachai\",\n        \"email\": \"test@email.com\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "parking-lot",
+			"item": [
+				{
+					"name": "get-status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/parking-lot/status/:id",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"parking-lot",
+								"status",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-status-2025-07-13",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/parking-lot/status/:id",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"parking-lot",
+										"status",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "35"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"23-a1ygemXzsuobSbTGr1cmaqt8E/g\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 13 Jul 2025 15:58:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"totalSlot\": 40,\n    \"availableSlot\": 40\n}"
+						}
+					]
+				},
+				{
+					"name": "create-parking-lot",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Parking A\",\n    \"totalSlot\": 40\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/parking-lot",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"parking-lot"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-parking-lot-2025-07-13",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Parking A\",\n    \"totalSlot\": 40\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/parking-lot",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"parking-lot"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "170"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"aa-46tYZQYLydih6CGgfuR6fr6NZMA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 13 Jul 2025 15:58:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"Parking A\",\n    \"totalSlot\": 40,\n    \"availableSlot\": 40,\n    \"createdBy\": 1,\n    \"id\": 3,\n    \"createdAt\": \"2025-07-13T15:58:36.000Z\",\n    \"updatedAt\": \"2025-07-13T15:58:36.000Z\",\n    \"deletedAt\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "parking-slot",
+			"item": [
+				{
+					"name": "create-parking-slot",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"slotNumber\": \"A14\",\n    \"distanceFromEntry\": 0,\n    \"parkingLotId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/parking-slot",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"parking-slot"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-parking-slot-2025-07-13",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"slotNumber\": \"A14\",\n    \"distanceFromEntry\": 0,\n    \"parkingLotId\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/parking-slot",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"parking-slot"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "193"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c1-fsIBtFIqeJlGpXZTz4xejgef2v0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 13 Jul 2025 15:58:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"slotNumber\": \"A14\",\n    \"isParking\": false,\n    \"distanceFromEntry\": 0,\n    \"parkingLotId\": 2,\n    \"createdBy\": 1,\n    \"id\": 1,\n    \"createdAt\": \"2025-07-13T15:58:51.000Z\",\n    \"updatedAt\": \"2025-07-13T15:58:51.000Z\",\n    \"deletedAt\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ticket",
+			"item": [
+				{
+					"name": "get-refistration-plate-number",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/ticket/registration-plate-number/list?carSize=medium&parkingLotId=2",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket",
+								"registration-plate-number",
+								"list"
+							],
+							"query": [
+								{
+									"key": "carSize",
+									"value": "medium"
+								},
+								{
+									"key": "parkingLotId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-refistration-plate-number-2025-07-13",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/ticket/registration-plate-number/list?carSize=medium&parkingLotId=2",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"ticket",
+										"registration-plate-number",
+										"list"
+									],
+									"query": [
+										{
+											"key": "carSize",
+											"value": "medium"
+										},
+										{
+											"key": "parkingLotId",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "7"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"7-RFSTAMCVcgaeKPsC381D6o1Jr8Y\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 13 Jul 2025 16:00:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    \"x11\"\n]"
+						}
+					]
+				},
+				{
+					"name": "registration-allocated-slot-number",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/ticket/registration-allocated-slot-number/list?carSize=medium&parkingLotId=2",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket",
+								"registration-allocated-slot-number",
+								"list"
+							],
+							"query": [
+								{
+									"key": "carSize",
+									"value": "medium"
+								},
+								{
+									"key": "parkingLotId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "registration-allocated-slot-number-2025-07-13",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/ticket/registration-allocated-slot-number/list?carSize=medium&parkingLotId=2",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"ticket",
+										"registration-allocated-slot-number",
+										"list"
+									],
+									"query": [
+										{
+											"key": "carSize",
+											"value": "medium"
+										},
+										{
+											"key": "parkingLotId",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "7"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"7-xGk7uNlsMubo8E79KbDBx+9peAk\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 13 Jul 2025 16:00:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    \"A14\"\n]"
+						}
+					]
+				},
+				{
+					"name": "create-ticket",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"plateNumber\": \"x11\",\n    \"size\": \"medium\",\n    \"parkingLotId\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/ticket",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-parking-slot-2025-07-13",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"plateNumber\": \"x11\",\n    \"size\": \"medium\",\n    \"parkingLotId\":2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/ticket",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"ticket"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "283"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11b-gEDB+YU9mohqPaa75E/XrJWd4K4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 13 Jul 2025 15:59:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ticketData\": {\n        \"id\": 1,\n        \"plateNumber\": \"x11\",\n        \"size\": \"medium\",\n        \"slotNumber\": \"A14\"\n    },\n    \"ticketToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGxhdGVOdW1iZXIiOiJ4MTEiLCJzaXplIjoibWVkaXVtIiwic2xvdE51bWJlciI6IkExNCIsImlhdCI6MTc1MjQyMjM3MX0.N432MomsdRocdmZn4LCvT5eqJF3NarUMijnx8Uy72Ec\"\n}"
+						}
+					]
+				},
+				{
+					"name": "leave-parking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGxhdGVOdW1iZXIiOiJ4MTEiLCJzaXplIjoibWVkaXVtIiwic2xvdE51bWJlciI6IkExNCIsImlhdCI6MTc1MjQyMjM3MX0.N432MomsdRocdmZn4LCvT5eqJF3NarUMijnx8Uy72Ec",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"plateNumber\": \"x11\",\n    \"size\": \"medium\",\n    \"slotNumber\": \"A14\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/ticket/leave-parking",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket",
+								"leave-parking"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "leave-parking-2025-07-13",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"plateNumber\": \"x11\",\n    \"size\": \"medium\",\n    \"slotNumber\": \"A14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/ticket/leave-parking",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"ticket",
+										"leave-parking"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-yu8/YBWJ2wgKH/GRI+7FgHhQVWM\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 13 Jul 2025 16:02:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "Car has left the parking successfully"
+						}
+					]
+				}
+			]
+		}
+	]
+}
