@@ -172,7 +172,7 @@ curl -X POST http://localhost:3000/api/parking-lot \
 {
     "name": "Parking A",
     "totalSlot": 40,
-    "availableSlot": 40,
+    "availableSlot": 0,
     "createdBy": 1,
     "id": 3,
     "createdAt": "2025-07-13T15:58:36.000Z",
@@ -183,7 +183,7 @@ curl -X POST http://localhost:3000/api/parking-lot \
 
 **คำอธิบาย:**
 - สร้างลานจอดรถใหม่พร้อมกำหนดจำนวนช่องจอดรถ
-- `availableSlot` เริ่มต้นเท่ากับ `totalSlot`
+- `availableSlot` เริ่มต้นเท่ากับ `0`
 
 ---
 
@@ -235,6 +235,7 @@ curl -X POST http://localhost:3000/api/parking-slot \
 - สร้างช่องจอดรถในลานจอดรถที่กำหนด
 - `distanceFromEntry`: ระยะทางจากทางเข้า (ใช้สำหรับจัดลำดับการจัดสรรช่องจอดรถ)
 - `isParking`: สถานะการใช้งานช่องจอดรถ (false = ว่าง)
+- จะเพิ่ม availableSlot ของที่ลานจอดรถ +1
 
 ---
 
