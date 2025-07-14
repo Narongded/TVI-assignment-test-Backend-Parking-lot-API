@@ -1,11 +1,28 @@
 version: '3'
 
 services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password123'
+      MYSQL_USER: devuser
+      MYSQL_PASSWORD: devpassword
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - '3306:3306'
+    command: --default-authentication-plugin=mysql_native_password
   app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: api
+    depends_on:
+      - mysql
     environment:
       - PORT=${PORT}
       - NODE_ENV=${NODE_ENV}
@@ -29,17 +46,5 @@ services:
       - .:/app
       - /app/node_modules
     command: sh -c "yarn install && yarn start:dev"
-  mysql:
-    image: mysql:8.0
-    container_name: mysql_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 'password123'
-      MYSQL_USER: devuser
-      MYSQL_PASSWORD: devpassword
-      MYSQL_ROOT_HOST: '%'
-    volumes:
-      - ./mysql-data:/var/lib/mysql
-    ports:
-      - '3306:3306'
-    command: --default-authentication-plugin=mysql_native_password
+
+    

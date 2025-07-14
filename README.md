@@ -124,7 +124,7 @@ curl -X POST http://localhost:3000/api/auth/login \
 
 **cURL:**
 ```bash
-curl -X GET http://localhost:3000/api/parking-lot/status/2
+curl -X GET http://localhost:3000/api/parking-lot/status/1
 ```
 
 **Parameters:**
@@ -174,7 +174,7 @@ curl -X POST http://localhost:3000/api/parking-lot \
     "totalSlot": 40,
     "availableSlot": 0,
     "createdBy": 1,
-    "id": 3,
+    "id": 1,
     "createdAt": "2025-07-13T15:58:36.000Z",
     "updatedAt": "2025-07-13T15:58:36.000Z",
     "deletedAt": null
@@ -203,7 +203,7 @@ curl -X POST http://localhost:3000/api/parking-slot \
   -d '{
     "slotNumber": "A14",
     "distanceFromEntry": 0,
-    "parkingLotId": 2
+    "parkingLotId": 1
   }'
 ```
 
@@ -212,7 +212,7 @@ curl -X POST http://localhost:3000/api/parking-slot \
 {
     "slotNumber": "A14",
     "distanceFromEntry": 0,
-    "parkingLotId": 2
+    "parkingLotId": 1
 }
 ```
 
@@ -222,7 +222,7 @@ curl -X POST http://localhost:3000/api/parking-slot \
     "slotNumber": "A14",
     "isParking": false,
     "distanceFromEntry": 0,
-    "parkingLotId": 2,
+    "parkingLotId": 1,
     "createdBy": 1,
     "id": 1,
     "createdAt": "2025-07-13T15:58:51.000Z",
@@ -249,7 +249,7 @@ curl -X POST http://localhost:3000/api/parking-slot \
 
 **cURL:**
 ```bash
-curl -X GET "http://localhost:3000/api/ticket/registration-plate-number/list?carSize=medium&parkingLotId=2" \
+curl -X GET "http://localhost:3000/api/ticket/registration-plate-number/list?carSize=medium&parkingLotId=1" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -275,7 +275,7 @@ curl -X GET "http://localhost:3000/api/ticket/registration-plate-number/list?car
 
 **cURL:**
 ```bash
-curl -X GET "http://localhost:3000/api/ticket/registration-allocated-slot-number/list?carSize=medium&parkingLotId=2" \
+curl -X GET "http://localhost:3000/api/ticket/registration-allocated-slot-number/list?carSize=medium&parkingLotId=1" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -305,7 +305,7 @@ curl -X POST http://localhost:3000/api/ticket \
   -d '{
     "plateNumber": "AB 11",
     "size": "medium",
-    "parkingLotId": 2
+    "parkingLotId": 1
   }'
 ```
 
@@ -314,7 +314,7 @@ curl -X POST http://localhost:3000/api/ticket \
 {
     "plateNumber": "x11",
     "size": "medium",
-    "parkingLotId": 2
+    "parkingLotId": 1
 }
 ```
 
@@ -423,7 +423,7 @@ curl -X GET "http://localhost:3000/api/ticket/registration-plate-number/list?car
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 
 # ดึงรายการหมายเลขช่องจอดรถที่ถูกจัดสรรตามขนาดรถ
-curl -X GET "http://localhost:3000/api/ticket/registration-allocated-slot-number/list?carSize=medium&parkingLotId=2" \
+curl -X GET "http://localhost:3000/api/ticket/registration-allocated-slot-number/list?carSize=medium&parkingLotId=1" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
